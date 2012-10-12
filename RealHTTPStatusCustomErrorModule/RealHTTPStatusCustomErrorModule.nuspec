@@ -1,0 +1,34 @@
+﻿<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>J.Sakamoto</authors>
+    <owners>J.Sakamoto</owners>
+    <!--
+    <iconUrl/>
+    -->
+    <licenseUrl>http://www.microsoft.com/en-us/openness/licenses.aspx#MPL</licenseUrl>
+    <projectUrl>https://github.com/jsakamoto/RealHTTPStatusCostomErrorModule</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>
+      After installed this module, you can get Real HTTP status code with custom error page.
+    </summary>
+    <description>
+      If your ASP.NET Web application occurs unhandled exception,
+      may be display custom error page to your user
+      because you should configure web.config-customErrros section.
+      But, custom error page always respond HTTP status 200 success instead of HTTP status 500 server error or HttpException status code.
+      If you install this module, you can get Real HTTP status code with custom error page.
+      [Notice] You must configure "redirectMode" setting on web.config-customErrors section to "ResponseRewrite".
+    </description>
+    <releaseNotes>
+    </releaseNotes>
+    <dependencies>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="web.config.transform" target="Content\web.config.transform" />
+  </files>
+</package>

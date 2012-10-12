@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+
+  <system.web>
+    <httpModules>
+      <add name="RealHTTPStatusCustomErrorModule" type="RealHTTPStatusCustomErrorModule,RealHTTPStatusCustomErrorModule"/>
+    </httpModules>
+  </system.web>
+
+  <system.webServer>
+    <modules>
+      <add name="RealHTTPStatusCustomErrorModule" type="RealHTTPStatusCustomErrorModule,RealHTTPStatusCustomErrorModule"/>
+    </modules>
+  </system.webServer>
+</configuration>
