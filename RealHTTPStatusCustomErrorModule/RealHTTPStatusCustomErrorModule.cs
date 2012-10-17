@@ -21,20 +21,24 @@ public class RealHTTPStatusCustomErrorModule : IHttpModule
     /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
     void PreSendRequestHeaders(object sender, EventArgs e)
     {
-        // If the configuration of custom errors is not enabled, nothing to do.
-        var app = sender as HttpApplication;
-        if (app.Context.IsCustomErrorEnabled == false) return;
-
         // If no exception occurs, nothing to do.
+        var app = sender as HttpApplication;
         var err = app.Server.GetLastError();
         if (err == null) return;
-            
+
+        // If the configuration of custom errors is not enabled, nothing to do.
+        var response = app.Response;
+        if (app.Context.IsCustomErrorEnabled == false)
+        {
+            response.Headers.Add("X-CustomErrorPage", "No");
+            return;
+        }
+
         // If the configuration of custom errors redirect mode is not rewrite, nothing to do.
         var customErrors = app.Context.GetSection("system.web/customErrors") as CustomErrorsSection;
         if (customErrors == null || customErrors.RedirectMode != CustomErrorsRedirectMode.ResponseRewrite) return;
 
         // Retrieve HTTP status code to respond.
-        var response = app.Response;
         response.StatusCode = (err is HttpException) ? (err as HttpException).GetHttpCode() : 500;
 
         // Avoid IIS7 httpErrors handling.
@@ -43,7 +47,7 @@ public class RealHTTPStatusCustomErrorModule : IHttpModule
             trySkipIisCustomErrors = true;
         response.TrySkipIisCustomErrors = trySkipIisCustomErrors;
 
-        // Make 'X-ErrPageUrl' custom response header.
+        // Make 'X-ErrPageUrl' and 'X-CustomErrorPage' custom response header.
         var errPageUrl = customErrors.Errors.AllKeys.Contains(response.StatusCode.ToString()) ?
             customErrors.Errors[response.StatusCode.ToString()].Redirect :
             customErrors.DefaultRedirect;
@@ -55,6 +59,7 @@ public class RealHTTPStatusCustomErrorModule : IHttpModule
             errPageUrl = appVPath + errPageUrl;
         }
         response.Headers.Add("X-ErrPageUrl", errPageUrl);
+        response.Headers.Add("X-CustomErrorPage", "Yes");
     }
 
     /// <summary>

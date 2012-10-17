@@ -24,6 +24,10 @@
       [Notice] You must configure "redirectMode" setting on web.config-customErrors section to "ResponseRewrite".
     </description>
     <releaseNotes>
+    <![CDATA[
+    v.1.0.1
+    - Add 'X-CustomErrorPage: {Yes|No}' custome response header.
+    ]]>
     </releaseNotes>
     <dependencies>
     </dependencies>
