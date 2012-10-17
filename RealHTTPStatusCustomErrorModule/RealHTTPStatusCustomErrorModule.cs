@@ -30,7 +30,7 @@ public class RealHTTPStatusCustomErrorModule : IHttpModule
         var response = app.Response;
         if (app.Context.IsCustomErrorEnabled == false)
         {
-            response.Headers.Add("X-CustomErrorPage", "No");
+            response.AddHeader("X-CustomErrorPage", "No");
             return;
         }
 
@@ -58,8 +58,8 @@ public class RealHTTPStatusCustomErrorModule : IHttpModule
             if (appVPath.EndsWith("/") == false) appVPath += "/";
             errPageUrl = appVPath + errPageUrl;
         }
-        response.Headers.Add("X-ErrPageUrl", errPageUrl);
-        response.Headers.Add("X-CustomErrorPage", "Yes");
+        response.AddHeader("X-ErrPageUrl", errPageUrl);
+        response.AddHeader("X-CustomErrorPage", "Yes");
     }
 
     /// <summary>
